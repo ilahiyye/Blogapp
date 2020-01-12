@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{%load static%}                                       <!--static papqasini sehifeye elave edirik-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">  <!--static papqasinin icindeki  css/bootstrap.min.js faylini sehifeye load edirik-->
+    <title>YBBOLG</title>
+</head>
+    <body>
+        {% include "includes/navbar.html" %}             <!--include ederek novbarmizi sehifeye elave edirik-->
+        <br>
+        <div style="margin-top: 50px; margin-bottom: 50px"  class="container"> <!--margin-top: 100px; sehifenin yuxarisinda 100px,  margin-bottom: 50px ise sehifenin asagisindan 50px bosluq buraxacaq-->
+        {% if messages %}
+            
+            {% for message in messages %}                <!--Django.da danger mesajlari olmadigina gore info mesajini danger kimi gostereceyik-->
+            {% if message.tags == "info" %}
+            <div class="alert alert-danger">{{ message }}</div>  <!--burda ise message daha dinamikdi-->
+            {% else %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+
+        {% endif %}
+        
+            {% block body %}
+
+            {% endblock body %}
+
+        </div>
+        <script src="{%static 'js/bootstrap.min.js' %}" >   </script>
+        <script src="{%static 'js/jquery-3.2.1.min.js' %}"> </script>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>  <!--bu script meqaleye proqram kodu yazarken renglendirmesi ucundur--> 
+        
+    </body>
+</html>

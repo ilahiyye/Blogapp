@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h3 style = "font-weight: bolder; color: dimgray; text-align: center;">İDARƏETMƏ PANELİ</h3>
+<hr style = "border: 1.5px solid dimgray;">
+
+<p  style = "color:  dimgray"> Xoş gəlmisiniz, <B style = "color: #f31111c4"> {{request.user.username}} </B> </p>
+<a class="btn btn-danger" href = "/article/addarticle/">Məqalə Yüklə</a> <!--Məqalə Yüklə buttonuna basdiqda /articles/addarticles/ url unvanina getmesini gosteririrk-->
+
+<hr style = "border: 1.5px solid dimgray;">
+
+<!--Table Articles-->
+{% if articles %}   <!--Eger articl varsa (bura articles.i biz context sozluyu vasitesi ile gonderdik)-->
+    <table class="table">
+        <thead class="thead-green" style="color: #f31111c4">
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Müəllif</th>
+            <th scope="col">Mövzu</th>
+            <th scope="col">Tarix</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for articles in articles %}
+            <tr>
+            <th scope="row">{{articles.id}}</th>
+            <td>{{articles.author}}</td>
+            <td>{{articles.title}}</td>
+            <td>{{articles.created_date}}</td>
+            <td><a class = "btn btn-danger" href = "{%url 'article:update' articles.id %}">Redaktə et</a></td> <!--dinamik urelenin aciq formasi /article/update/{{articles.id}}-->
+            <td><a class = "btn btn-danger" href = "{%url 'article:delete' articles.id %}">Sil</a></td>  <!--burada articles.id >> DB deki id-ni gosterdiyi ucun deyisenin adini artilesi yaziriq. URL yox-->
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% else %}  <!--Eger muellifin meqalesi yoxdursa asagidaki kimi danger mesaji gorsenecek-->
+ <div class="alert alert-danger">
+ Sizin hələlik heç bir məqaləniz yoxdur...
+ </div>
+{% endif %}
+{% endblock body %}

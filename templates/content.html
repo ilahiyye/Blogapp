@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block body %}
+ <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4" style="text-align: center"> {{articles.title}} </h1>
+
+        <hr style = "border: 1px solid dimgray;">
+
+        <!-- Author -->
+        <p><B> Author: </B> by {{articles.author}} </p>
+         <!-- Date/Time -->
+        <p> <B>Tarix:</B> {{articles.created_date}}</p>
+
+       <hr style = "border: 1px solid dimgray;">
+
+        <!-- Preview Image -->
+        {% if articles.article_image %}                                         <!-- Eger articlda sekil varsa gorsenecek -->
+        <img class="img-fluid rounded" src="{{articles.article_image.url}}">  <!--article.article_image.url resimmizin url adresini qaytaracaq -->
+        
+        <hr style = "border: 1px solid dimgray;">
+
+        {% endif %}
+        
+        <!-- Post Content -->
+        
+        <p class="lead">{{articles.content|safe}}</p>   <!-- |safe Content.imiz HTML metni kimi deyil normal metn kimi gorunsun  -->
+        <br><br>
+        <h5 class="container">RƏYLƏR</h5>
+        <hr>
+        <!-- Comment views (Reyleri gostermek) -->
+        {% if comments %}                <!-- eger rey varsa -->          
+          {% for comment in comments %}  <!-- butun reyle varsa -->
+            <div class="media mb-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h6 class="mt-0">{{comment.comment_author}}<br>
+                <small><I>{{comment.comment_date}}</I></small>
+                </h6>
+                {{comment.comment_content}}    
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+        <h6 class="card-header"><I>Rəy yazilmayib ...</I></h6>
+        {% endif %}
+
+        <!-- Add Comment forms (Rey elave etmek) -->
+        <div class="card my-4">
+          <h6 class="card-header"><I>Rəy</I></h6>
+          <div class="card-body">
+            <form method = "Post" >   <!--action = "{% url 'article:comment' articles.id %}" commenti elave etdikde article/comment/{{comment.id}} unvanina getsin-->
+            {% csrf_token %}
+             <br>
+              <input type="text" name = "comment_author" class="form-control" id="usr" placeholder="İstifadəçi adınız...">
+              <div class="form-group">
+              <br>
+                <textarea class="form-control" rows="4" name = "comment_content" id="comment" placeholder="İçtimai rəy əlavə edin..."></textarea>
+              </div>
+              <button type="submit" style="float: right" class="btn btn-primary">Əıavə et</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+
+{% endblock body %}

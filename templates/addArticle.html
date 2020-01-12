@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+{% load crispy_forms_tags %}
+<br>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h3>Məqalə yaz</h3>
+    <hr>
+    <form method = "POST" enctype="multipart/form-data"> <!--enctype="multipart/form-data yazmasan file upload olmayacaq-->
+        {% csrf_token %}
+        {{ form.media}}
+        {{ form|crispy }}           <!--Biz Ckeditoru isdifade ede bilmek ucun bunu yaziriq (URL: Outside of django admin) -->
+
+        <br>
+        <button style="float: right" type="submit" class="btn btn-danger">Paylaş</button>
+    </form>
+ </div>
+</div>
+
+{% endblock body %}

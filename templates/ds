@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h3 style = "font-weight: bolder; color: dimgray; text-align: center;">Ailə Büdcəsinin Planlaşdırılması</h3>
+  <hr style = "border: 1.5px solid dimgray;">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+    <br>
+      <form method ="Post">
+         
+        {% csrf_token %}             <!--melumatlar ogurlanmaisn deye django csrf xetasi verir. Onun ucun de bunu yaziriq-->
+        {{form}}
+        <button button type="submit" class="btn btn-danger"> Hesabla</button>
+      </form>
+      <br> <br>
+      
+      {% if form.name.value != None %}
+      
+      <table class="table table-hover table-dark" style="text-align: center; ">
+        <thead>
+          <tr>
+            <th style="text-align: center;" scope="col">Xərclər</th>
+            <th scope="col" style="text-align: center;" >Ayrılan pul</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, value in netice.items  %}  <!--dictonary-nin butun elementlerini gotururuk-->
+          <tr>
+            <td>{{key}}</td>
+            <td>{{value}} manat</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      {% else %}  
+        <div class="alert alert-danger"> Zəhmət olmasa aylıq ailə büdcənizi daxil edin!</div>
+        
+      {% endif %}
+    </div>
+  </div>
+
+
+{% endblock body %}
+
+
+
+-------------------------------------------------------------------------------------------------------
+
+ if request.method == "POST":
+        form = BudceForm(request.Post)
+        context = {
+            "form":form
+                  }
+        if form.is_valid():      
+            a = int(form.cleaned_data.get['budget'])
+            
+            q = a*40//100        #qida
+            t = a*5//100         #tehsil
+            m = a*5//100         #meiset
+            kom = a*15//100      #kommunal
+            i = a*4//100         #tehsil
+            kir = a*20//100      #kiraye/kredit
+            n = a*6//100         #neqliyyat
+            kas = a*5//100       #kassa
+                
+
+            netice = {
+                "Qida":q,
+                "Təhsil":t,
+                "Müalicə":m,
+                "Kommunal":kom,
+                "Istirahət":i,
+                "Kirayə":kir,
+                "Nəqliyyat":n,
+                "Kassa":kas,
+                } 
+            return render(request, "calculator.html", {"netice":netice})
+        return render(request, "calculator.html", context)
+    else:                #Get request edilmisse
+        form = BudceForm()     
+        context = {
+            "form":form
+                  }  
+        return render(request,"calculator.html",context)   

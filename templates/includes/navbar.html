@@ -1,0 +1,40 @@
+
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'index'  %}">Home</a> <!--dinamik url name gore veririk-->
+        
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'about'  %}">Hakkımızda</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href ="{% url 'calculator' %}">Büdcə planı</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+          {% if  request.user.is_authenticated %}  <!--eger istifadeci giris edibse gorsenecek-->
+              <li class="nav-item active">
+                <a class="nav-link" style = "color: #f31111c4"><I>{{request.user.username}}</I></a>  <!--giris eden istifadecinin adi gorseneck-->
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href ="{% url 'article:dashboard' %}">Idarəetmə Paneli</a> <!--bu dinamik url --"/article/dashboard" a gedir-->
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href = "{% url 'USER:logout' %}">Çıkış</a>   <!--QEYD: 'USER:logout' YAZILISINDA BOSLUQ BURAXMAQ OLMAZ. /user/logout   dinamik url-dekilogout onun name-dir-->
+              </li>
+          {% else %}
+              <li class="nav-item active">
+                <a class="nav-link" href = "{% url 'USER:login'%}">Daxil ol</a>   <!--/user/login-->
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href = "{% url 'USER:register' %}">Qeydiyyatdan keç</a> <!--/user/register-->
+              </li>
+          {% endif %}
+        </ul>
+        </div>
+    
+    
+</nav>

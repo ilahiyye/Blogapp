@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h3 style = "font-weight: bolder; color: dimgray; text-align: center;">Ailə Büdcəsinin Planlaşdırılması</h3>
+  <hr style = "border: 1.5px solid dimgray;">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+    <br>
+      <form style="text-align: center;">
+        {% csrf_token %}             <!--melumatlar ogurlanmaisn deye django csrf xetasi verir. Onun ucun de bunu yaziriq-->
+        <input  type="text" name = "budget" class="input-sm" maxlength="30" placeholder="Büdcəniz...">
+        <button button type="submit" class="btn btn-danger"> Hesabla</button>
+      </form>
+      <br> <br>
+      
+      {% if netice %}
+
+      <p> Ailə büdcənizi düzgün idarə edə bilmək üçün hər ay xərclərə aşağıdakı qədər pul ayırmalısız </p>
+      
+        <table class="table table-hover table-dark" style="text-align: center; ">
+          <thead>
+            <tr>
+              <th style="text-align: center;" scope="col">Xərclər</th>
+              <th scope="col" style="text-align: center;" >Ayrılan pul</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+            {% for key, value in netice.items  %}  <!--dictonary-nin butun elementlerini gotururuk-->
+            <tr>
+              <td>{{key}}</td>
+              <td>{{value}} manat</td>
+            </tr>
+            {% endfor %}
+          
+          </tbody>
+        </table>       
+      
+      {% else %}
+        <div class="alert alert-danger">
+         "Zəhmət olmasa aylıq ailə büdcənizi daxil edin!"
+        </div>
+      {% endif %}
+
+    
+    </div>
+  </div>
+
+
+{% endblock body %}

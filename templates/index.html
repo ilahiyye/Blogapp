@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12 offset-md-5">
+        <div class="col-lg-8">
+
+        <form style="float: right">
+        {% csrf_token %}
+        <input type="text" name = "keyword" class="input-sm" maxlength="30" placeholder="Açar söz...">
+        <button type="submit" class="btn btn-primary">Axtar</button>
+        </form>
+        
+        </div>
+    </div>
+</div>
+    {% if articles %}
+    {% for articles in articles %}
+
+        <div class="row">
+            <div class="col-md-10 offset-md-3">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <a href = "/content/{{articles.id}}">
+                <h3 class="mt-4" style="text-align: center"> {{articles.title}} </h3>
+                </a>
+
+                <hr>
+
+                <!-- Author -->
+                <p><B> Author: </B> by {{articles.author}} </p>
+                <!-- Date/Time -->
+                <p> <B>Tarix:</B> {{articles.created_date}}</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                {% if articles.article_image %}                                         <!-- Eger articlda sekil varsa gorsenecek -->
+                <a href = "{% url 'content' articles.id %}">   <!--/content/{{articles.id}}-->
+                <img class="img-fluid rounded" src="{{articles.article_image.url}}">  <!--article.article_image.url resimmizin url adresini qaytaracaq -->
+                </a>
+                <hr>
+
+                {% endif %}
+                
+                <!-- Post Content -->
+                
+                
+                <p class="lead">{{articles.content|safe|truncatewords:25}}</p>   <!-- |safe Content.imiz HTML metni kimi deyil normal metn kimi gorunsun  -->
+                <a href = "{%url 'content' articles.id %}">Davamını oxu </a>
+                                                                                 <!-- |truncatewords:15 meqalemizin contentinin ilk 15 sozunu gosterecek. 15 deyise bilerik -->
+                
+                <hr>
+
+            </div>
+
+         </div>
+    {% endfor %}
+
+    {% else %}
+        <div class="alert alert-danger">
+         Məqalə tapılmadı
+        </div>
+    {% endif %}
+
+
+        
+        
+      
+      
+    
+{% endblock body %}
+
+
+
+

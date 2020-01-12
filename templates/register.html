@@ -1,0 +1,18 @@
+{% extends "layout.html" %}      <!--html ve ccs kodlarini goturur-->
+
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form method = "Post">
+        {% csrf_token %}             <!--melumatlar ogurlanmaisn deye django csrf xetasi verir. Onun ucun de bunu yaziriq-->
+        {{form|crispy}}                <!--views-dan gonderdiyimiz form.u burda gorunmesi ucun djangoda .as_p de elave etmelisen-->
+
+        <br>
+        
+        <button type="submit" class="btn btn-danger">Qeydiyyat</button>
+        
+    </form>
+    </div>
+</div>
+{% endblock body %}
