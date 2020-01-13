@@ -2,4 +2,5 @@
 
 url: ilahiye.pythonanywhere.com
 
-pip install -r 
+Install Dependencies
+pip install -r requirements.txt
