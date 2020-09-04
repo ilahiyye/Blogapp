@@ -59,20 +59,6 @@ def content(request, id):                                            #dinamic ur
     articles = get_object_or_404(Article, id = id)                   #get_object_or_404 de bize id=id olan Article obyektini cekmeye imkan verir. Eger id yoxdursa onda 404 not found yazilir
     #Reyleri db-den alib meqalelerin altinda goster
     comments = articles.comments.all()                                #articlin commentlerine xarici acar vasitesi ile article.comments deyerek ala bilerik.Cunki models.py de forignkey.e related_name="comments" vermisik
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     return render(request, "content.html", {"articles" :articles, "comments" :comments})   #tamplate_name = articlin altindaki index.html
 
 
